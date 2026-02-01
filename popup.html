@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>__MSG_extName__</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1 data-i18n="title">Special Character Picker</h1>
+    
+    <div class="quick-access-buttons">
+      <button id="common-btn" class="action-btn active" data-i18n="commonBtn">Common</button>
+      <button id="favorites-btn" class="action-btn" data-i18n="favoritesBtn">My Favorites</button>
+    </div>
+
+    <div class="category-selection">
+      <label for="category-select" data-i18n="categoryLabel">Category:</label>
+      <select id="category-select">
+        <!-- Options will be dynamically generated here -->
+      </select>
+    </div>
+
+    <div class="grid-container" id="char-grid">
+      <!-- Characters will be dynamically generated here -->
+    </div>
+    
+    <div class="mode-selection">
+      <label><input type="radio" name="mode" value="directCopy" checked> <span data-i18n="modeDirectCopy">Direct Copy</span></label>
+      <label><input type="radio" name="mode" value="directInsert"> <span data-i18n="modeDirectInsert">Direct Insert</span></label>
+      <label><input type="radio" name="mode" value="appendEdit"> <span data-i18n="modeAppendEdit">Append & Edit</span></label>
+    </div>
+
+    <div class="editor-container">
+      <input type="text" id="editor-input" data-i18n-placeholder="editorPlaceholder" placeholder="Edit content here...">
+      <button id="clear-btn" class="clear-btn" aria-label="Clear" title="Clear">&times;</button>
+    </div>
+
+    <div class="button-container">
+      <button id="copy-btn" class="action-btn" data-i18n="copyBtn">Copy</button>
+      <button id="insert-btn" class="action-btn" data-i18n="insertBtn">Insert</button>
+    </div>
+
+    <div class="footer">
+      <a href="https://ko-fi.com/qiyuanyang" id="coffee-link" data-i18n="buyMeCoffee" target="_blank">❤️ Buy me a coffee</a>
+      <span class="footer-divider"></span>
+      <a href="https://hugbear.ai" id="about-link" data-i18n="aboutLink" target="_blank">About Us</a>
+    </div>
+  </div>
+  <div id="context-menu" class="context-menu" style="display: none;"></div>
+  <script type="module" src="js/popup.js"></script>
+</body>
+</html>
