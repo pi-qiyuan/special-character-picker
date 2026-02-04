@@ -19,6 +19,9 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 - ✅ **Recents & Favorites**: Access your most frequently used symbols in the "Recent" bar—no more digging.
 - ✅ **Non-Intrusive Design**: A minimalist UI that opens quickly and stays out of your way.
 
+### Installation
+[Download on Chrome Web Store](https://chromewebstore.google.com/detail/special-character-picker/ejofkafmbaaipjkegidfegeilldhcacm)
+
 ### 📖 HOW IT WORKS
 -----------------------------------
 Open the extension via the toolbar or a shortcut.
@@ -51,3 +54,4 @@ Questions or suggestions? Contact us via the Support tab or visit our GitHub.
 ### License
 -----------------------------------
 MIT License
+
