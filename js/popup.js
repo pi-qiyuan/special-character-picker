@@ -7,14 +7,28 @@ import { View } from './ui/view.js';
 document.addEventListener('DOMContentLoaded', () => {
   let currentMode = 'directCopy';
   let contextChar = '';
+  let currentCategory = categoryConfig[0].id;
+  const categoryScrollPositions = {};
 
   const { elements } = View;
 
   // --- Logic Helpers ---
 
+  const saveCurrentScrollPosition = () => {
+    if (currentCategory) {
+      categoryScrollPositions[currentCategory] = elements.charGrid.scrollTop;
+    }
+  };
+
+  const restoreScrollPosition = (category) => {
+    elements.charGrid.scrollTop = categoryScrollPositions[category] || 0;
+  };
+
   const saveCurrentState = () => {
     StorageService.saveAppState({
       lastMode: currentMode,
+      // Always save the value of categorySelect so we remember the last "Common" category 
+      // even if we are currently in "Favorites" mode.
       lastCategory: elements.categorySelect.value,
       lastActiveBtnId: document.querySelector('.quick-access-buttons .action-btn.active')?.id || 'common-btn',
       editorContent: elements.editorInput.value
@@ -29,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
       });
+      restoreScrollPosition('recent');
     }
   };
 
@@ -70,25 +85,30 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Event Listeners ---
 
   elements.commonBtn.addEventListener('click', () => {
-    const defaultCat = categoryConfig[0].id;
+    saveCurrentScrollPosition();
+    const targetCat = elements.categorySelect.value || categoryConfig[0].id;
+    currentCategory = targetCat;
     View.updateQuickAccessActiveState('common-btn');
     elements.categorySelect.disabled = false;
-    elements.categorySelect.value = defaultCat;
-    View.renderCharGrid(defaultCat, characterCategories[defaultCat], currentMode, {
+    View.renderCharGrid(targetCat, characterCategories[targetCat], currentMode, {
       onCharClick: handleCharClick,
       onCharContextMenu: handleCharContextMenu
     });
+    restoreScrollPosition(targetCat);
     View.updateUIForMode(currentMode);
     saveCurrentState();
   });
 
   elements.favoritesBtn.addEventListener('click', () => {
+    saveCurrentScrollPosition();
+    currentCategory = 'favorites';
     View.updateQuickAccessActiveState('favorites-btn');
     elements.categorySelect.disabled = true;
     View.renderCharGrid('favorites', characterCategories.favorites, currentMode, {
       onCharClick: handleCharClick,
       onCharContextMenu: handleCharContextMenu
     });
+    restoreScrollPosition('favorites');
     View.updateUIForMode(currentMode);
     saveCurrentState();
   });
@@ -140,11 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.categorySelect.addEventListener('change', (e) => {
     const category = e.target.value;
     if (category) {
+      saveCurrentScrollPosition();
+      currentCategory = category;
       View.updateQuickAccessActiveState('common-btn');
       View.renderCharGrid(category, characterCategories[category], currentMode, {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
       });
+      restoreScrollPosition(category);
       View.updateUIForMode(currentMode);
       saveCurrentState();
     }
@@ -174,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
       });
+      restoreScrollPosition(currentCat);
     }
     
     View.hideContextMenu();
@@ -203,17 +227,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (savedState.lastActiveBtnId === 'favorites-btn') {
+        const lastCat = savedState.lastCategory || defaultCat;
+        elements.categorySelect.value = lastCat;
         elements.favoritesBtn.click();
       } else {
-        elements.categorySelect.value = savedState.lastCategory || defaultCat;
-        elements.categorySelect.dispatchEvent(new Event('change'));
+        const lastCat = savedState.lastCategory || defaultCat;
+        elements.categorySelect.value = lastCat;
+        // Trigger manual change to use our logic
+        const event = new Event('change');
+        elements.categorySelect.dispatchEvent(event);
       }
     } else {
       View.updateUIForMode(currentMode);
+      currentCategory = defaultCat;
       View.renderCharGrid(defaultCat, characterCategories[defaultCat], currentMode, {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
       });
+      restoreScrollPosition(defaultCat);
       View.updateQuickAccessActiveState('common-btn');
     }
   };

@@ -19,20 +19,73 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 - ✅ **Recents & Favorites**: Access your most frequently used symbols in the "Recent" bar—no more digging.
 - ✅ **Non-Intrusive Design**: A minimalist UI that opens quickly and stays out of your way.
 
+📚 SUPPORTED CATEGORIES
+-----------------------------------
+- Classic: Essential control symbols, copyright marks, and basic math operators.   
+  👉 Best for: Everyone, especially technical writers needing Copyright (©) or Registered (®) marks.
+
+- Emoji: A rich set of pictographs covering expressions, gestures, animals, and food.   
+  👉 Best for: Social media enthusiasts and casual communicators.
+
+- Kaomoji: Classic Japanese-style text emoticons for unique text-based expression.   
+  👉 Best for: Anime fans, forum users, and creative bloggers.
+
+- Punctuation: Various forms of quotation marks, dashes, and special hyphens.   
+  👉 Best for: Professional typographers and copywriters seeking precision.
+
+- Shapes: Basic geometric figures like squares, triangles, and circles.   
+  👉 Best for: UI designers and PPT creators for layout and visualization.
+
+- Lines: A complete set of box-drawing characters, including single and double lines.   
+  👉 Best for: Developers and sysadmins drawing tables or diagrams in plain text/code.
+
+- Arrows: A comprehensive collection of directional and specialized arrows.   
+  👉 Best for: Flowchart creators and technical document authors.
+
+- Stars: Decorative star, heart, and border symbols.   
+  👉 Best for: Note-takers and creators looking to highlight or decorate content.
+
+- Office Tech: Keyboard shortcut symbols, office supplies, and technical icons.   
+  👉 Best for: Tech writers and tutorial creators to clearly show commands.
+
+- Currency: Symbols for major and minor global currencies.   
+  👉 Best for: Finance professionals, international traders, and e-commerce operators.
+
+- Numeric: Circled numbers, Roman numerals, fractions, and sub/superscripts.   
+  👉 Best for: Academic authors and textbook editors for lists and formulas.
+
+- Math: An extensive collection of algebraic, geometric, and logical operators.   
+  👉 Best for: Scientists, students, and math teachers for complex formula entry.
+
+- Units: Standardized symbols for temperature, length, weight, and storage.   
+  👉 Best for: Engineers and laboratory workers ensuring technical standards.
+
+- Scholastic: Greek letters, logical inference marks, and other academic symbols.   
+  👉 Best for: Scholars in philosophy, physics, and engineering.
+
+- Accents: Latin letters with accents, diacritics, and umlauts.   
+  👉 Best for: Language learners and translators of French, German, Spanish, etc.
+
+- Phonetic: Standard International Phonetic Alphabet (IPA) symbols.   
+  👉 Best for: Linguists, English teachers, and students of pronunciation.
+
+- Recent: Dynamically tracks all characters you've recently used.   
+  👉 Best for: Everyone—automatically speeds up access to your personal favorites.
+
 ### Installation
 [Download on Chrome Web Store](https://chromewebstore.google.com/detail/special-character-picker/ejofkafmbaaipjkegidfegeilldhcacm)
 
 ### 📖 HOW IT WORKS
 -----------------------------------
-Open the extension via the toolbar or a shortcut.
-Find your symbol (via categories or your favorites).
-Click to Copy or Insert—your flow remains uninterrupted!
+Open the extension via the toolbar or a shortcut.   
+Find your symbol (via categories or your favorites).   
+Click to Copy or Insert—your flow remains uninterrupted!   
 You may add symbols to your favorite by right click on the symbol.
 
 ### 🗺️ COMING SOON
 -----------------------------------
-● Search Bar: Quickly find symbols by name (e.g., "delta" or "check").
-● Custom Sets: Create your own custom character groups.
+● Search Bar: Quickly find symbols by name (e.g., "delta" or "check").   
+● Custom Sets: Create your own custom character groups.   
 ● Global Hotkeys: Open the picker without ever touching your mouse.
 
 ### 💬 BUILT FOR PRODUCTIVITY
@@ -48,6 +101,9 @@ Questions or suggestions? Contact us via the Support tab or visit our GitHub.
 
 ### Changelog
 -----------------------------------
+#### v1.1.0
+- Improved categorization.
+
 #### v1.0.0
 - Initial release
 
