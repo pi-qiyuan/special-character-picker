@@ -4,6 +4,16 @@ Stop breaking your creative flow to search for symbols! Special Character Picker
 
 Designed for writers, developers, and students who value a seamless "deep work" experience.
 
+### 🎉 v1.2.0 UPDATE: FULL SMART SEARCH
+-----------------------------------
+- **Full Smart Search**: A brand new search system that supports finding characters across all categories. It uses a "Local Language + English" dual indexing logic—whether you search for "copyright" or its local equivalent, you'll find exactly what you're looking for.
+
+- **Custom Search Tags**: Now you can define your own search terms for any character! Just right-click a character to quickly edit its tags. Custom tags have the highest priority in search results.
+
+- **7-Language Search Index**: Built-in search dictionaries for English, Chinese, German, French, Spanish, Japanese, and Korean, providing a seamless native-language search experience for users worldwide.
+
+- **Personalized Markers**: Characters with custom tags will display a pink dot in the top-right corner, making it easy to identify your personalized settings at a glance.
+
 ### 🌟 THREE POWERFUL MODES
 -----------------------------------
 - **Direct Insert**: Instantly inject the chosen character directly into the active text field on your current webpage.
@@ -45,8 +55,14 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 - Stars: Decorative star, heart, and border symbols.   
   👉 Best for: Note-takers and creators looking to highlight or decorate content.
 
+- Games & Leisure: Poker, mahjong, chess, and dice symbols.
+  👉 Best for: Gamers, card game content creators, and those needing game-related graphics.
+
 - Office Tech: Keyboard shortcut symbols, office supplies, and technical icons.   
   👉 Best for: Tech writers and tutorial creators to clearly show commands.
+
+- Office/Units: Eras, office symbols, directions, time, date, months, and specialized units.
+  👉 Best for: Administrators, Japanese document editors, and anyone needing compact office notations.
 
 - Currency: Symbols for major and minor global currencies.   
   👉 Best for: Finance professionals, international traders, and e-commerce operators.
@@ -60,7 +76,7 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 - Units: Standardized symbols for temperature, length, weight, and storage.   
   👉 Best for: Engineers and laboratory workers ensuring technical standards.
 
-- Scholastic: Greek letters, logical inference marks, and other academic symbols.   
+- Greek & Roman Letters (greekRoman): Greek letters, Roman numerals, logical inference marks, and other academic symbols.
   👉 Best for: Scholars in philosophy, physics, and engineering.
 
 - Accents: Latin letters with accents, diacritics, and umlauts.   
@@ -68,6 +84,9 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 
 - Phonetic: Standard International Phonetic Alphabet (IPA) symbols.   
   👉 Best for: Linguists, English teachers, and students of pronunciation.
+
+- Hieroglyphs: Pictographs and various ancient or modern non-Latin phonetic scripts.
+  👉 Best for: Language researchers, artists, and designers seeking an exotic or historical touch in their typography.
 
 - Recent: Dynamically tracks all characters you've recently used.   
   👉 Best for: Everyone—automatically speeds up access to your personal favorites.

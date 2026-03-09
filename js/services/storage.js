@@ -8,8 +8,30 @@
 const ENABLE_STATE_PERSISTENCE = true;     // 是否存取应用状态 (模式、分类、编辑框内容)
 const ENABLE_FAVORITES_PERSISTENCE = true; // 是否存取收藏夹
 const ENABLE_RECENT_PERSISTENCE = true;    // 是否存取最近使用
+const ENABLE_SEARCH_PERSISTENCE = true;    // 是否存取搜索标签
 
 export const StorageService = {
+  // --- Search Tags Management ---
+  async getUserTags() {
+    if (!ENABLE_SEARCH_PERSISTENCE) return {};
+    return new Promise((resolve) => {
+      chrome.storage.local.get({ user_tags: {} }, (result) => {
+        resolve(result.user_tags);
+      });
+    });
+  },
+
+  async saveUserTag(char, tags) {
+    if (!ENABLE_SEARCH_PERSISTENCE) return;
+    const userTags = await this.getUserTags();
+    if (tags && tags.trim()) {
+      userTags[char] = tags.trim();
+    } else {
+      delete userTags[char];
+    }
+    await chrome.storage.local.set({ user_tags: userTags });
+  },
+
   // --- Favorites Management ---
   async getFavorites() {
     if (!ENABLE_FAVORITES_PERSISTENCE) return [];

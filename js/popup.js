@@ -2,6 +2,7 @@ import { characterCategories, categoryConfig } from './characters.js';
 import { applyI18n } from './utils/i18n.js';
 import { StorageService } from './services/storage.js';
 import { ActionService } from './services/actions.js';
+import { SearchService } from './services/search.js';
 import { View } from './ui/view.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,12 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let contextChar = '';
   let currentCategory = categoryConfig[0].id;
   const categoryScrollPositions = {};
+  
+  let searchTimeout = null;
+  let isSearching = false;
 
   const { elements } = View;
 
   // --- Logic Helpers ---
 
   const saveCurrentScrollPosition = () => {
+    if (isSearching) return;
     if (currentCategory) {
       categoryScrollPositions[currentCategory] = elements.charGrid.scrollTop;
     }
@@ -27,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveCurrentState = () => {
     StorageService.saveAppState({
       lastMode: currentMode,
-      // Always save the value of categorySelect so we remember the last "Common" category 
-      // even if we are currently in "Favorites" mode.
       lastCategory: elements.categorySelect.value,
       lastActiveBtnId: document.querySelector('.quick-access-buttons .action-btn.active')?.id || 'common-btn',
       editorContent: elements.editorInput.value
@@ -37,12 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const refreshRecentData = async () => {
     characterCategories.recent = await StorageService.getRecent();
+    if (isSearching) {
+      handleSearch(elements.searchInput.value);
+      return;
+    }
     const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
     if (currentCat === 'recent') {
       View.renderCharGrid('recent', characterCategories.recent, currentMode, {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
-      });
+      }, SearchService.getUserTagsCache());
       restoreScrollPosition('recent');
     }
   };
@@ -78,13 +85,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const handleCharContextMenu = (char, event) => {
     contextChar = char;
-    const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
-    View.showContextMenu(event.clientX, event.clientY, currentCat);
+    const currentCat = isSearching ? 'search' : (elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value);
+    View.showContextMenu(event.clientX, event.clientY, char, currentCat);
+  };
+
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      isSearching = false;
+      elements.searchClearBtn.style.display = 'none';
+      const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
+      View.renderCharGrid(currentCat, characterCategories[currentCat], currentMode, {
+        onCharClick: handleCharClick,
+        onCharContextMenu: handleCharContextMenu
+      }, SearchService.getUserTagsCache());
+      restoreScrollPosition(currentCat);
+      return;
+    }
+
+    isSearching = true;
+    elements.searchClearBtn.style.display = 'block';
+    const results = await SearchService.search(query);
+    
+    View.renderSearchResults(results, {
+      onCharClick: handleCharClick,
+      onCharContextMenu: handleCharContextMenu
+    }, SearchService.getUserTagsCache());
   };
 
   // --- Event Listeners ---
 
+  elements.searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => handleSearch(e.target.value), 200);
+  });
+
+  elements.searchClearBtn.addEventListener('click', () => {
+    elements.searchInput.value = '';
+    handleSearch('');
+    elements.searchInput.focus();
+  });
+
   elements.commonBtn.addEventListener('click', () => {
+    if (isSearching) {
+      elements.searchInput.value = '';
+      isSearching = false;
+      elements.searchClearBtn.style.display = 'none';
+    }
     saveCurrentScrollPosition();
     const targetCat = elements.categorySelect.value || categoryConfig[0].id;
     currentCategory = targetCat;
@@ -93,13 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
     View.renderCharGrid(targetCat, characterCategories[targetCat], currentMode, {
       onCharClick: handleCharClick,
       onCharContextMenu: handleCharContextMenu
-    });
+    }, SearchService.getUserTagsCache());
     restoreScrollPosition(targetCat);
     View.updateUIForMode(currentMode);
     saveCurrentState();
   });
 
   elements.favoritesBtn.addEventListener('click', () => {
+    if (isSearching) {
+      elements.searchInput.value = '';
+      isSearching = false;
+      elements.searchClearBtn.style.display = 'none';
+    }
     saveCurrentScrollPosition();
     currentCategory = 'favorites';
     View.updateQuickAccessActiveState('favorites-btn');
@@ -107,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     View.renderCharGrid('favorites', characterCategories.favorites, currentMode, {
       onCharClick: handleCharClick,
       onCharContextMenu: handleCharContextMenu
-    });
+    }, SearchService.getUserTagsCache());
     restoreScrollPosition('favorites');
     View.updateUIForMode(currentMode);
     saveCurrentState();
@@ -158,6 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.categorySelect.addEventListener('change', (e) => {
+    if (isSearching) {
+      elements.searchInput.value = '';
+      isSearching = false;
+      elements.searchClearBtn.style.display = 'none';
+    }
     const category = e.target.value;
     if (category) {
       saveCurrentScrollPosition();
@@ -166,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
       View.renderCharGrid(category, characterCategories[category], currentMode, {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
-      });
+      }, SearchService.getUserTagsCache());
       restoreScrollPosition(category);
       View.updateUIForMode(currentMode);
       saveCurrentState();
@@ -178,6 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.contextMenu.addEventListener('click', async (e) => {
     e.stopPropagation();
     const action = e.target.dataset.action;
+    
+    if (action === 'edit-tags') {
+      const { defaultTags, userTags } = await SearchService.getTagsForChar(contextChar);
+      View.showTagEditor(contextChar, defaultTags, userTags);
+      View.hideContextMenu();
+      return;
+    }
+
     if (action === 'add') {
       await StorageService.addToFavorites(contextChar);
     } else if (action === 'remove') {
@@ -186,21 +250,53 @@ document.addEventListener('DOMContentLoaded', () => {
       await StorageService.removeFromRecent(contextChar);
     }
     
-    // Refresh local data
     characterCategories.favorites = await StorageService.getFavorites();
     characterCategories.recent = await StorageService.getRecent();
     
-    // Re-render if needed
-    const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
-    if (currentCat === 'favorites' || currentCat === 'recent') {
+    if (isSearching) {
+      handleSearch(elements.searchInput.value);
+    } else {
+      const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
+      if (currentCat === 'favorites' || currentCat === 'recent') {
+        View.renderCharGrid(currentCat, characterCategories[currentCat], currentMode, {
+          onCharClick: handleCharClick,
+          onCharContextMenu: handleCharContextMenu
+        }, SearchService.getUserTagsCache());
+        restoreScrollPosition(currentCat);
+      }
+    }
+    View.hideContextMenu();
+  });
+
+  // --- Tag Editor Listeners ---
+
+  elements.userTagsInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      elements.saveTagsBtn.click();
+    }
+  });
+
+  elements.cancelTagsBtn.addEventListener('click', () => View.hideTagEditor());
+
+  elements.saveTagsBtn.addEventListener('click', async () => {
+    await SearchService.saveUserTag(contextChar, elements.userTagsInput.value);
+    
+    if (isSearching) {
+      handleSearch(elements.searchInput.value);
+    } else {
+      const currentCat = elements.categorySelect.disabled ? 'favorites' : elements.categorySelect.value;
       View.renderCharGrid(currentCat, characterCategories[currentCat], currentMode, {
         onCharClick: handleCharClick,
         onCharContextMenu: handleCharContextMenu
-      });
+      }, SearchService.getUserTagsCache());
       restoreScrollPosition(currentCat);
     }
-    
-    View.hideContextMenu();
+    View.hideTagEditor();
+  });
+
+  elements.tagEditorOverlay.addEventListener('click', (e) => {
+    if (e.target === elements.tagEditorOverlay) View.hideTagEditor();
   });
   
   // --- Initialization ---
@@ -211,42 +307,43 @@ document.addEventListener('DOMContentLoaded', () => {
     
     characterCategories.favorites = await StorageService.getFavorites();
     characterCategories.recent = await StorageService.getRecent();
+    const userTags = await SearchService.refreshUserTags();
     
     const savedState = await StorageService.getAppState();
     const defaultCat = categoryConfig[0].id;
     
+    let targetMode = 'directCopy', targetCategory = defaultCat, targetActiveBtn = 'common-btn', targetEditorContent = '';
+
     if (savedState) {
-      currentMode = savedState.lastMode || 'directCopy';
-      const targetRadio = document.querySelector(`input[value="${currentMode}"]`);
-      if (targetRadio) targetRadio.checked = true;
-      View.updateUIForMode(currentMode);
-
-      if (savedState.editorContent !== undefined) {
-        elements.editorInput.value = savedState.editorContent;
-        View.updateEditorButtonsState();
-      }
-
-      if (savedState.lastActiveBtnId === 'favorites-btn') {
-        const lastCat = savedState.lastCategory || defaultCat;
-        elements.categorySelect.value = lastCat;
-        elements.favoritesBtn.click();
-      } else {
-        const lastCat = savedState.lastCategory || defaultCat;
-        elements.categorySelect.value = lastCat;
-        // Trigger manual change to use our logic
-        const event = new Event('change');
-        elements.categorySelect.dispatchEvent(event);
-      }
-    } else {
-      View.updateUIForMode(currentMode);
-      currentCategory = defaultCat;
-      View.renderCharGrid(defaultCat, characterCategories[defaultCat], currentMode, {
-        onCharClick: handleCharClick,
-        onCharContextMenu: handleCharContextMenu
-      });
-      restoreScrollPosition(defaultCat);
-      View.updateQuickAccessActiveState('common-btn');
+      targetMode = savedState.lastMode || 'directCopy';
+      targetActiveBtn = savedState.lastActiveBtnId || 'common-btn';
+      targetEditorContent = savedState.editorContent || '';
+      targetCategory = targetActiveBtn === 'favorites-btn' ? 'favorites' : (savedState.lastCategory || defaultCat);
     }
+
+    currentMode = targetMode;
+    currentCategory = targetCategory;
+    elements.editorInput.value = targetEditorContent;
+
+    const targetRadio = document.querySelector(`input[value="${currentMode}"]`);
+    if (targetRadio) targetRadio.checked = true;
+    
+    elements.categorySelect.value = (savedState?.lastCategory) || defaultCat;
+    elements.categorySelect.disabled = (targetActiveBtn === 'favorites-btn');
+
+    View.updateUIForMode(currentMode);
+    View.updateQuickAccessActiveState(targetActiveBtn);
+    View.updateEditorButtonsState();
+    View.renderCharGrid(currentCategory, characterCategories[currentCategory], currentMode, {
+      onCharClick: handleCharClick,
+      onCharContextMenu: handleCharContextMenu
+    }, userTags);
+    restoreScrollPosition(currentCategory);
+
+    requestAnimationFrame(() => {
+      const container = document.querySelector('.container');
+      if (container) container.style.opacity = '1';
+    });
   };
 
   initialize();
