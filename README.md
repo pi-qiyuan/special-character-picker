@@ -4,15 +4,15 @@ Stop breaking your creative flow to search for symbols! Special Character Picker
 
 Designed for writers, developers, and students who value a seamless "deep work" experience.
 
-### 🎉 v1.2.0 UPDATE: FULL SMART SEARCH
+### 🎉 v1.3.0 UPDATE: CATEGORIZED FAVORITES
 -----------------------------------
-- **Full Smart Search**: A brand new search system that supports finding characters across all categories. It uses a "Local Language + English" dual indexing logic—whether you search for "copyright" or its local equivalent, you'll find exactly what you're looking for.
+- **Favorite Categories**: Total control over your collections! You can now create, rename, and delete custom categories to organize your symbols exactly how you like.
 
-- **Custom Search Tags**: Now you can define your own search terms for any character! Just right-click a character to quickly edit its tags. Custom tags have the highest priority in search results.
+- **Secure Data Handling**: Never lose a symbol. If you delete a custom category, all symbols inside are automatically moved back to your "Default" category.
 
-- **7-Language Search Index**: Built-in search dictionaries for English, Chinese, German, French, Spanish, Japanese, and Korean, providing a seamless native-language search experience for users worldwide.
+- **Quick Selection UI**: When you have multiple categories, a smart selector pops up when adding a favorite, allowing you to pick the right destination instantly.
 
-- **Personalized Markers**: Characters with custom tags will display a pink dot in the top-right corner, making it easy to identify your personalized settings at a glance.
+- **Visual Feedback**: Added a new Toast Notification system. Get instant, non-intrusive confirmation when symbols are added to your collections.
 
 ### 🌟 THREE POWERFUL MODES
 -----------------------------------
@@ -25,9 +25,12 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 ### 🚀 KEY FEATURES
 -----------------------------------
 - ✅ **Categorized Library**: Effortlessly browse through Math symbols, Arrows, Currency, Punctuation, and Emojis.
-- ✅ **Smart Memory**: The extension remembers your last category and mode, so it’s always exactly where you left it.
-- ✅ **Recents & Favorites**: Access your most frequently used symbols in the "Recent" bar—no more digging.
-- ✅ **Non-Intrusive Design**: A minimalist UI that opens quickly and stays out of your way.
+- ✅ **Full Smart Search**: Powerful search system supporting local languages and English indexing across all categories.
+- ✅ **Custom Search Tags**: Define your own search terms for any character! Right-click to edit tags for instant discovery.
+- ✅ **Smart Memory**: The extension remembers your last category, mode, and scroll position for a seamless return.
+- ✅ **7-Language Support**: Native search and UI experience for English, Chinese, German, French, Spanish, Japanese, and Korean.
+- ✅ **Personalized Markers**: Easily identify characters with custom tags via a dedicated pink indicator.
+- ✅ **Recents & Favorites**: Access your most used symbols in the "Recent" bar or your own custom favorite folders.
 
 📚 SUPPORTED CATEGORIES
 -----------------------------------
