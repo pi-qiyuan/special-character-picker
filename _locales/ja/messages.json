@@ -68,5 +68,6 @@
   "milestone_fav_15": { "message": "お気に入りが増えています！15個のアイテムを保存しました。⭐" },
   "milestone_time_30": { "message": "一緒にもう一ヶ月！ありがとうございます。😊" },
   "milestone_time_100": { "message": "文字の100日記念！光栄です。❤️" },
-  "milestone_night": { "message": "夜遅くまでお疲れ様です。お体を大切に。🌙" }
+  "milestone_night": { "message": "夜遅くまでお疲れ様です。お体を大切に。🌙" },
+  "recentContext": { "message": "最近使用した文字" }
 }

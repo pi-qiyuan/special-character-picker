@@ -68,5 +68,6 @@
   "milestone_fav_15": { "message": "즐겨찾기가 늘어나고 있네요! 15개의 항목이 저장되었습니다. ⭐" },
   "milestone_time_30": { "message": "한 달 동안 함께해 주셔서 감사합니다! 😊" },
   "milestone_time_100": { "message": "문자 사용 100일 기념! 영광입니다. ❤️" },
-  "milestone_night": { "message": "늦은 밤까지 작업하시나요? 건강 잘 챙기세요. 🌙" }
+  "milestone_night": { "message": "늦은 밤까지 작업하시나요? 건강 잘 챙기세요. 🌙" },
+  "recentContext": { "message": "최근 사용한 문자" }
 }

@@ -68,5 +68,6 @@
   "milestone_fav_15": { "message": "Vos favoris s'agrandissent ! 15 éléments enregistrés. ⭐" },
   "milestone_time_30": { "message": "Un mois ensemble ! Merci de rester avec nous. 😊" },
   "milestone_time_100": { "message": "100 jours de symboles ! Nous sommes honorés. ❤️" },
-  "milestone_night": { "message": "Travail tardif ? Prenez soin de vous. 🌙" }
+  "milestone_night": { "message": "Travail tardif ? Prenez soin de vous. 🌙" },
+  "recentContext": { "message": "Caractères récents" }
 }

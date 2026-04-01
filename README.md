@@ -4,15 +4,13 @@ Stop breaking your creative flow to search for symbols! Special Character Picker
 
 Designed for writers, developers, and students who value a seamless "deep work" experience.
 
-### 🎉 v1.3.0 UPDATE: CATEGORIZED FAVORITES
+### 🎉 v1.4.0 UPDATE: CONTEXT MENU QUICK INSERT
 -----------------------------------
-- **Favorite Categories**: Total control over your collections! You can now create, rename, and delete custom categories to organize your symbols exactly how you like.
+- **Input Context Menu**: Boost your productivity! You can now right-click directly in any webpage input field (Input/Textarea) to quickly insert symbols via the "Recent Characters" menu without opening the extension popup.
 
-- **Secure Data Handling**: Never lose a symbol. If you delete a custom category, all symbols inside are automatically moved back to your "Default" category.
+- **Seamless Integration**: Perfectly integrated with the browser's native context menu, providing a "one-click" input experience for any editable area.
 
-- **Quick Selection UI**: When you have multiple categories, a smart selector pops up when adding a favorite, allowing you to pick the right destination instantly.
-
-- **Visual Feedback**: Added a new Toast Notification system. Get instant, non-intrusive confirmation when symbols are added to your collections.
+- **Real-time Sync**: The context menu updates dynamically based on your usage habits, ensuring your most-used symbols are always at your fingertips.
 
 ### 🌟 THREE POWERFUL MODES
 -----------------------------------
@@ -30,7 +28,9 @@ Designed for writers, developers, and students who value a seamless "deep work" 
 - ✅ **Smart Memory**: The extension remembers your last category, mode, and scroll position for a seamless return.
 - ✅ **7-Language Support**: Native search and UI experience for English, Chinese, German, French, Spanish, Japanese, and Korean.
 - ✅ **Personalized Markers**: Easily identify characters with custom tags via a dedicated pink indicator.
-- ✅ **Recents & Favorites**: Access your most used symbols in the "Recent" bar or your own custom favorite folders.
+- ✅ **Deep Favorites Management**: Create, rename, and delete custom categories with a secure auto-migration system when a category is removed.
+- ✅ **Recent Usage Tracking**: Dynamically tracks your usage history and automatically surfaces frequently used characters for faster access.
+- ✅ **Visual Feedback System**: Features non-intrusive Toast notifications for instant, clear state feedback on every action.
 
 📚 SUPPORTED CATEGORIES
 -----------------------------------
@@ -123,6 +123,15 @@ Questions or suggestions? Contact us via the Support tab or visit our GitHub.
 
 ### Changelog
 -----------------------------------
+#### v1.4.0
+- Context Menu Quick Insert
+
+#### v1.3.0
+- Categorized Favorites
+
+#### v1.2.0
+- Full Intelligent Search
+
 #### v1.1.0
 - Improved categorization.
 

@@ -68,5 +68,6 @@
   "milestone_fav_15": { "message": "你的收藏夹越来越丰富了！已保存 15 个项目。⭐" },
   "milestone_time_30": { "message": "相伴一个月！感谢你的支持。😊" },
   "milestone_time_100": { "message": "百日纪念！很荣幸能一直陪伴你。❤️" },
-  "milestone_night": { "message": "熬夜忙碌吗？照顾好自己。🌙" }
-}
+  "milestone_night": { "message": "熬夜忙碌吗？照顾好自己。🌙" },
+  "recentContext": { "message": "最近使用的字符" }
+  }
